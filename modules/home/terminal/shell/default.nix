@@ -1,0 +1,88 @@
+{ pkgs, ... }:
+let
+  myAliases = {
+    ll = "ls -l";
+    ff = "fastfetch";
+    dwn = "cd ~/Downloads/";
+    doc = "cd ~/Documents/";
+    res = "cd ~/Documents/Research/";
+    nv = "nvim";
+    ".." = "cd ..";
+    cc = "clear";
+    ee = "exit";
+    # ns = "nix-shell --run fish";
+    # dot = "zellij attach dotfiles";
+    hmS = "NIXPKGS_ALLOW_UNFREE=1 home-manager switch --flake . --impure";
+    hmG = "home-manager generations";
+    hmR = "home-manager remove-generations";
+    nixS = "sudo nixos-rebuild switch --flake .";
+    nixG = "nixos-rebuild list-generations";
+    nixR = "sudo nix-env -p /nix/var/nix/profiles/system/ --delete-generations";
+    garb = "nix-collect-garbage";
+    garbd = "nix-collect-garbage -d";
+  };
+in
+{
+  imports = [
+    ./starship.nix
+    ./eza.nix
+    ./zoxide.nix
+  ];
+  programs = {
+    fish = {
+      enable = true;
+      package = pkgs.fish;
+      loginShellInit = ''
+        if test -z "$WAYLAND_DISPLAY"
+            if uwsm check may-start && uwsm select
+                exec uwsm start default
+            end
+        end
+      '';
+      interactiveShellInit = ''
+        set fish_greeting
+        function set_cursor --on-event fish_prompt
+             echo -ne '\e[6 q'
+        end
+      '';
+      shellAliases = myAliases;
+    };
+    bash = {
+      enable = true;
+      enableCompletion = true;
+      historyFileSize = 10000;
+      historyIgnore = [
+        "ls"
+        "cd"
+        ".."
+        "ee"
+        "cc"
+        "ll"
+        "ff"
+        "tx"
+      ];
+      shellAliases = myAliases;
+    };
+    zsh = {
+      enable = true;
+      autosuggestion = {
+        enable = true;
+        highlight = "fg=#6f6c5d";
+        strategy = [
+          "history"
+          "completion"
+          "match_prev_cmd"
+        ];
+      };
+      syntaxHighlighting = {
+        enable = true;
+      };
+      history = {
+        path = "$HOME/.histfile";
+        save = 10000;
+        size = 10000;
+      };
+      shellAliases = myAliases;
+    };
+  };
+}
