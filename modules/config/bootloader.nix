@@ -33,10 +33,10 @@
       ];
     };
     consoleLogLevel = 0;
-    initrd = {
-      verbose = false;
-      # kernelModules = [ "amdgpu" ];
-    };
+    # initrd = {
+    # verbose = false;
+    # kernelModules = [ "amdgpu" ];
+    # };
     kernelParams = [
       "quiet"
       "splash"

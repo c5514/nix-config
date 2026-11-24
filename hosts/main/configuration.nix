@@ -8,7 +8,8 @@
     ../../modules/config/Network/default.nix
     ../../modules/config/Utils/power_management.nix
     #../../modules/config/DeskEnv/gnome.nix
-    ../../modules/config/DeskEnv/hyprland.nix
+    # ../../modules/config/DeskEnv/hyprland.nix
+    ../../modules/config/DeskEnv/niri.nix
   ];
 
   # Set your time zone.
@@ -26,6 +27,43 @@
       LC_PAPER = "en_US.UTF-8";
       LC_TELEPHONE = "en_US.UTF-8";
       LC_TIME = "en_US.UTF-8";
+    };
+    inputMethod = {
+      enable = true;
+      type = "fcitx5";
+      fcitx5 = {
+        waylandFrontend = true;
+        ignoreUserConfig = true;
+        addons = with pkgs; [
+          fcitx5-mozc
+          qt6Packages.fcitx5-chinese-addons
+          fcitx5-gtk
+        ];
+        settings = {
+          inputMethod = {
+            GroupOrder."0" = "Default";
+            "Groups/0" = {
+              Name = "Default";
+              "Default Layout" = "us-altgr-intl";
+              DefaultIM = "mozc";
+            };
+            "Groups/0/Items/0".Name = "keyboard-us-altgr-intl";
+            "Groups/0/Items/1".Name = "mozc";
+            "Groups/0/Items/2".Name = "pinyin";
+          };
+          globalOptions = {
+            "Hotkey/TriggerKeys"."0" = "Control+space";
+            Behavior = {
+              ActiveByDefault = "False";
+              ShareInputState = "All";
+              ShowInputMethodInformation = "False";
+            };
+          };
+          addons = {
+            pinyin.globalSection.EmojiEnabled = "True";
+          };
+        };
+      };
     };
   };
   console = {

@@ -9,6 +9,7 @@
     ./apps/default.nix
     ./Scripts/default.nix
     ./cloud/restic.nix
+    ./niri/default.nix
   ];
   home.file = {
     "Pictures/Nix".source = ./pictures;

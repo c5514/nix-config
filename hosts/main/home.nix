@@ -7,7 +7,8 @@
 }:
 {
   imports = [
-    ../../modules/home/hypr/default.nix
+    # ../../modules/home/hypr/default.nix
+    ../../modules/home/niri/default.nix
     ../../modules/home/default.nix
   ];
   nixpkgs.config = {
@@ -23,6 +24,7 @@
       coreutils
       brillo
       clang
+      fd
       awww
       libnotify
       lshw

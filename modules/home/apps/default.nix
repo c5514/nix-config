@@ -8,8 +8,8 @@
   ];
   home.packages =
     (with pkgs; [
+      jq
       tikzit
-      brave
       freetube
       # obsidian
       proton-vpn-cli
@@ -23,7 +23,7 @@
       mpd
       feh
       pinta
-      obs-studio
+      # obs-studio
       libreoffice-qt-stable
       btop
     ])
